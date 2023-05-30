@@ -239,10 +239,14 @@ defmodule XLA do
     end
   end
 
+  defp curl_args() do
+    System.get_env("CURL_ARGS") || ""
+  end
+
   defp get(url) do
     command =
       case network_tool() do
-        :curl -> "curl --fail --silent -L #{url}"
+        :curl -> "curl --fail --silent -L #{curl_args()} #{url}"
         :wget -> "wget -q -O - #{url}"
       end
 
